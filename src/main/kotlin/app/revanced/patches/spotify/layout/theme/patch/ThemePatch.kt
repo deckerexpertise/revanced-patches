@@ -1,4 +1,6 @@
+
 package app.revanced.patches.spotify.layout.theme.patch
+
 
 import app.revanced.patcher.annotation.Description
 import app.revanced.patcher.annotation.Name
@@ -7,6 +9,7 @@ import app.revanced.patcher.patch.*
 import app.revanced.patcher.patch.annotations.Patch
 import app.revanced.patches.spotify.layout.theme.annotations.ThemeCompatibility
 import org.w3c.dom.Element
+
 
 @Patch
 @Name("Spotify theme")
@@ -17,8 +20,10 @@ class ThemePatch : ResourcePatch {
         context.xmlEditor["res/values/colors.xml"].use { editor ->
             val resourcesNode = editor.file.getElementsByTagName("resources").item(0) as Element
 
+
             for (i in 0 until resourcesNode.childNodes.length) {
                 val node = resourcesNode.childNodes.item(i) as? Element ?: continue
+
 
                 node.textContent = when (node.getAttribute("name")) {
                     "gray_7" -> backgroundColor!!
@@ -29,14 +34,16 @@ class ThemePatch : ResourcePatch {
             }
         }
 
+
         return PatchResultSuccess()
     }
+
 
     companion object : OptionsContainer() {
         var backgroundColor: String? by option(
             PatchOption.StringOption(
                 key = "backgroundColor",
-                default = "@android:color/black",
+                default = "#ff2e3440",
                 title = "Background color",
                 description = "The background color. Can be a hex color or a resource reference.",
             )
@@ -44,7 +51,7 @@ class ThemePatch : ResourcePatch {
         var accentColor: String? by option(
             PatchOption.StringOption(
                 key = "accentColor",
-                default = "#ff1ed760",
+                default = "#ff81a1c1",
                 title = "Accent color",
                 description = "The accent color ('spotify green' by default). Can be a hex color or a resource reference.",
             )
@@ -52,7 +59,7 @@ class ThemePatch : ResourcePatch {
         var accentPressedColor: String? by option(
             PatchOption.StringOption(
                 key = "accentPressedColor",
-                default = "#ff169c46",
+                default = "#ff5e81ac",
                 title = "Pressed accent for the dark theme",
                 description = "The color when accented buttons are pressed, by default slightly darker than accent. Can be a hex color or a resource reference.",
             )
